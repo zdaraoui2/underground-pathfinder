@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include "Utils.h"
 #include <string>
 #include <iostream>
 
@@ -17,6 +18,12 @@ void initialiseGraph(Graph &graph)
 int main()
 {
     Graph londonUnderground;
+    // Initialise Graph
     initialiseGraph(londonUnderground);
     londonUnderground.printGraph();
+
+    // Sort and print stations
+    std::vector<std::string> stations = londonUnderground.getAllStations();
+    BubbleSort(stations);
+    londonUnderground.printSortedStations(stations);
 }
