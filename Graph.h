@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <unordered_map>
+#include "Utils.h"
 
 struct Connection
 {
@@ -62,6 +63,22 @@ public:
         for (const auto &station : stations)
         {
             std::cout << station << std::endl;
+        }
+    }
+
+    // Method to search for a station using binary search
+    void searchStation(const std::string &targetStation) const
+    {
+        std::vector<std::string> stations = getAllStations();
+        BubbleSort(stations);
+        int result = BinarySearch(stations, targetStation);
+        if (result != -1)
+        {
+            std::cout << "Station " << targetStation << " is present in the graph." << std::endl;
+        }
+        else
+        {
+            std::cout << "Station " << targetStation << " is not present in the graph." << std::endl;
         }
     }
 };
