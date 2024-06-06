@@ -27,4 +27,30 @@ void BubbleSort(std::vector<std::string> &stations)
     }
 }
 
+// Binary Search algorithm
+int BinarySearch(const std::vector<std::string> &stations, const std::string &target)
+{
+    int lowerBound = 0;
+    int upperBound = stations.size() - 1;
+    int middle;
+
+    while (lowerBound <= upperBound)
+    {
+        middle = (lowerBound + upperBound) / 2;
+        if (stations[middle] < target)
+        {
+            lowerBound = middle + 1;
+        }
+        else if (stations[middle] > target)
+        {
+            upperBound = middle - 1;
+        }
+        else
+        {
+            return middle;
+        }
+    }
+    return -1;
+}
+
 #endif // UTILS_H
