@@ -43,4 +43,25 @@ public:
             std::cout << std::endl;
         }
     }
+
+    // Method to get all stations
+    std::vector<std::string> getAllStations() const
+    {
+        std::vector<std::string> stations;
+        for (const auto &station : adjacencyList)
+        {
+            stations.push_back(station.first);
+        }
+        return stations;
+    }
+
+    // Method to print sorted stations
+    void printSortedStations(const std::vector<std::string> &stations) const
+    {
+        std::cout << "Sorted Stations:" << std::endl;
+        for (const auto &station : stations)
+        {
+            std::cout << station << std::endl;
+        }
+    }
 };
