@@ -1,17 +1,42 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
-template <class T>
+#include <string>
+
+struct StationDistance
+{
+    std::string station;
+    int distance;
+
+    StationDistance(const std::string &station, int distance)
+        : station(station), distance(distance) {}
+
+    bool operator>(const StationDistance &other) const
+    {
+        return distance > other.distance;
+    }
+
+    bool operator<(const StationDistance &other) const
+    {
+        return distance < other.distance;
+    }
+
+    bool operator==(const StationDistance &other) const
+    {
+        return distance == other.distance;
+    }
+};
+
 class PriorityQueue
 {
     int size;
-    T **data;
+    StationDistance **data;
     int count;
 
 public:
     PriorityQueue(int size)
     {
-        data = new T *[size];
+        data = new StationDistance *[size];
         this->size = size;
         count = 0;
     }
@@ -19,7 +44,7 @@ public:
     {
         delete[] data;
     }
-    void Insert(T *item)
+    void Insert(StationDistance *item)
     {
         if (count == 0)
         {
@@ -43,11 +68,11 @@ public:
             count++;
         }
     }
-    T *Remove()
+    StationDistance *Remove()
     {
         return data[--count];
     }
-    T *PeakMin()
+    StationDistance *PeakMin()
     {
         return data[count - 1];
     }
