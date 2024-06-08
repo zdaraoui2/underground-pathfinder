@@ -81,4 +81,10 @@ public:
             std::cout << "Station " << targetStation << " is not present in the graph." << std::endl;
         }
     }
+
+    // Method to get connections from a station
+    const std::list<Connection> &getConnections(const std::string &station) const
+    {
+        return adjacencyList.at(station);
+    }
 };
