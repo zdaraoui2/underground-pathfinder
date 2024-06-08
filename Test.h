@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Graph.h"
 #include "PriorityQueue.h"
+#include "Dijkstra.h"
 
 // Test for PriorityQueue
 void testPriorityQueue()
@@ -31,5 +32,25 @@ void testGetConnections(const Graph &graph, const std::string &station)
     for (const auto &connection : connections)
     {
         std::cout << "  - To: " << connection.station << ", Travel Time: " << connection.travelTime << std::endl;
+    }
+}
+
+void testDijkstra(Graph graph, std::string startStation, std::string endStation)
+{
+
+    std::vector<std::string> path = Dijkstra::findShortestPath(graph, startStation, endStation);
+
+    if (!path.empty())
+    {
+        std::cout << "Shortest path from " << startStation << " to " << endStation << " is: ";
+        for (const auto &station : path)
+        {
+            std::cout << station << " ";
+        }
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "No path found from " << startStation << " to " << endStation << "." << std::endl;
     }
 }
