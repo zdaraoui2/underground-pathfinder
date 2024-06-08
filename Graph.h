@@ -2,7 +2,6 @@
 #define GRAPH_H
 
 #include <list>
-#include <string>
 #include <iostream>
 #include <unordered_map>
 #include "Utils.h"
