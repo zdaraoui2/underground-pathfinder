@@ -1,3 +1,6 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include <list>
 #include <string>
 #include <iostream>
@@ -88,3 +91,5 @@ public:
         return adjacencyList.at(station);
     }
 };
+
+#endif // GRAPH_H
