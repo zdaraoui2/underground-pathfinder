@@ -26,6 +26,28 @@ public:
         // Adds starting station to priority queue
         pq.Insert(new StationDistance(startingStation, 0));
 
+        while (!pq.IsEmpty())
+        {
+            StationDistance *current = pq.Remove();
+            if (current->station == endStation)
+            {
+                break; // Ends once end station has been reached
+            }
+
+            for (const auto &connection : graph.adjacencyList.at(current->station))
+            {
+                int newDistance = current->distance + connection.travelTime;
+                if (newDistance < distancesToStart[connection.station])
+                {
+                    distancesToStart[connection.station] = newDistance;
+                    previousStation[connection.station] = current->station;
+                    pq.Insert(new StationDistance(connection.station, newDistance));
+                }
+            }
+
+            delete current;
+        }
+
         return {};
     }
 };
