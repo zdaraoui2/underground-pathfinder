@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include "Utils.h"
 #include "PriorityQueue.h"
+#include "Dijkstra.h"
 #include "Test.h"
 #include <iostream>
 
@@ -10,10 +11,11 @@ void initialiseGraph(Graph &graph)
     graph.addStation("Oxford Circus");
     graph.addStation("Green Park");
     graph.addStation("Victoria");
+    graph.addStation("Bond Street");
 
     // Initialise Edges
     graph.addConnection("Oxford Circus", "Green Park", 1);
-    graph.addConnection("Oxford Circus", "Bond Stret", 1);
+    graph.addConnection("Oxford Circus", "Bond Street", 1);
     graph.addConnection("Victoria", "Green Park", 1);
 }
 
@@ -42,6 +44,9 @@ int main()
 
     // Test getConnections method
     testGetConnections(londonUnderground, "Oxford Circus");
+
+    // Test Dijkstra
+    testDijkstra(londonUnderground, "Victoria", "Bond Street");
 
     // C++ convention to return zero from main
     return 0;

@@ -48,7 +48,19 @@ public:
             delete current;
         }
 
-        return {};
+        // Construct path
+        std::vector<std::string> path;
+        for (std::string at = endStation; at != ""; at = previousStation[at])
+        {
+            path.push_back(at);
+            if (at == startingStation)
+            {
+                break;
+            }
+        }
+        std::reverse(path.begin(), path.end());
+
+        return path;
     }
 };
 
