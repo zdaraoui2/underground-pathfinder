@@ -1,5 +1,7 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include <list>
-#include <string>
 #include <iostream>
 #include <unordered_map>
 #include "Utils.h"
@@ -81,4 +83,12 @@ public:
             std::cout << "Station " << targetStation << " is not present in the graph." << std::endl;
         }
     }
+
+    // Method to get connections from a station
+    const std::list<Connection> &getConnections(const std::string &station) const
+    {
+        return adjacencyList.at(station);
+    }
 };
+
+#endif // GRAPH_H

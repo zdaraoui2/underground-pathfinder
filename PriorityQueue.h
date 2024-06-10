@@ -1,8 +1,6 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
-#include <string>
-
 struct StationDistance
 {
     std::string station;
