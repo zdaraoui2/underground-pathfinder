@@ -19,6 +19,26 @@ void initialiseGraph(Graph &graph)
     graph.addConnection("Victoria", "Green Park", 1);
 }
 
+void findShortestPath(Graph graph, std::string startStation, std::string endStation)
+{
+
+    std::vector<std::string> path = Dijkstra::findShortestPath(graph, startStation, endStation);
+
+    if (!path.empty())
+    {
+        std::cout << "Shortest path from " << startStation << " to " << endStation << " is: ";
+        for (const auto &station : path)
+        {
+            std::cout << station << " ";
+        }
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "No path found from " << startStation << " to " << endStation << "." << std::endl;
+    }
+}
+
 int main()
 {
     Graph londonUnderground;
@@ -39,14 +59,21 @@ int main()
     // // Perform search for the station
     // londonUnderground.searchStation(targetStation);
 
-    // Test PriorityQueue
-    testPriorityQueue();
+    // // Test PriorityQueue
+    // testPriorityQueue();
 
-    // Test getConnections method
-    testGetConnections(londonUnderground, "Oxford Circus");
+    // // Test getConnections method
+    // testGetConnections(londonUnderground, "Oxford Circus");
 
-    // Test Dijkstra
-    testDijkstra(londonUnderground, "Victoria", "Bond Street");
+    // User input for finding path
+    std::string startStation, endStation;
+    std::cout << "Enter the station you are starting at: ";
+    std::getline(std::cin, startStation);
+    std::cout << "Enter the station you are going to: ";
+    std::getline(std::cin, endStation);
+
+    // Use Dijsktra's algorithm
+    findShortestPath(londonUnderground, startStation, endStation);
 
     // C++ convention to return zero from main
     return 0;
