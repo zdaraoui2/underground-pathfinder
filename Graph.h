@@ -10,6 +10,10 @@ struct Connection
 {
     std::string station; // Other vertex that this node is connected to
     int travelTime;      // Weighting of the edge
+    std::string line;    // Tube line
+
+    Connection(const std::string &station, int travelTime, const std::string &line)
+        : station(station), travelTime(travelTime), line(line) {}
 };
 
 class Graph
@@ -24,10 +28,10 @@ public:
     }
 
     // Method to add an edge to the graph
-    void addConnection(const std::string &from, const std::string &to, int travelTime)
+    void addConnection(const std::string &from, const std::string &to, int travelTime, const std::string &line)
     {
-        adjacencyList[from].push_back({to, travelTime});
-        adjacencyList[to].push_back({from, travelTime});
+        adjacencyList[from].push_back(Connection(to, travelTime, line));
+        adjacencyList[to].push_back(Connection(from, travelTime, line));
     }
 
     // Method to output the graph as text
@@ -40,7 +44,7 @@ public:
 
             for (const auto &connection : station.second)
             {
-                std::cout << "  - To: " << connection.station << ", Travel Time: " << connection.travelTime << std::endl;
+                std::cout << "  - To: " << connection.station << ", Travel Time: " << connection.travelTime << ", Line: " << connection.line << std::endl;
             }
 
             std::cout << std::endl;

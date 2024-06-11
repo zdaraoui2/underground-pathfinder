@@ -14,9 +14,9 @@ void initialiseGraph(Graph &graph)
     graph.addStation("Bond Street");
 
     // Initialise Edges
-    graph.addConnection("Oxford Circus", "Green Park", 1);
-    graph.addConnection("Oxford Circus", "Bond Street", 1);
-    graph.addConnection("Victoria", "Green Park", 1);
+    graph.addConnection("Oxford Circus", "Green Park", 1, "Victoria");
+    graph.addConnection("Oxford Circus", "Bond Street", 3, "Central");
+    graph.addConnection("Victoria", "Green Park", 2, "Victoria");
 }
 
 std::string getValidStation(const std::vector<std::string> stations, const std::string &type)
@@ -39,8 +39,8 @@ std::string getValidStation(const std::vector<std::string> stations, const std::
 
 void findShortestPath(Graph graph, std::string startStation, std::string endStation)
 {
-
-    std::vector<std::string> path = Dijkstra::findShortestPath(graph, startStation, endStation);
+    int totalTravelTime = 0;
+    std::vector<std::string> path = Dijkstra::findShortestPath(graph, startStation, endStation, totalTravelTime);
 
     if (!path.empty())
     {
@@ -50,6 +50,7 @@ void findShortestPath(Graph graph, std::string startStation, std::string endStat
             std::cout << station << " ";
         }
         std::cout << std::endl;
+        std::cout << "The total travel time is " << totalTravelTime << " minutes" << std::endl;
     }
     else
     {

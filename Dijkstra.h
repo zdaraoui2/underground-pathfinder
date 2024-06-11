@@ -7,41 +7,42 @@
 class Dijkstra
 {
 public:
-    static std::vector<std::string> findShortestPath(const Graph &graph, const std::string &startingStation, const std::string &endStation)
+    static std::vector<std::string> findShortestPath(const Graph &graph, const std::string &startingStation, const std::string &endStation, int &totalTravelTime)
     {
         // Store shortest distance from start to each node
-        std::unordered_map<std::string, int> distancesToStart;
+        std::unordered_map<std::string, int> timesToStart;
         // Store previous node in shortest path
         std::unordered_map<std::string, std::string> previousStation;
         // Priority Queue
         PriorityQueue pq(100);
 
-        // Initialise distances
+        // Initialise times
         for (const auto &station : graph.getAllStations())
         {
-            distancesToStart[station] = INT_MAX;
+            timesToStart[station] = INT_MAX;
         }
-        distancesToStart[startingStation] = 0;
+        timesToStart[startingStation] = 0;
 
         // Adds starting station to priority queue
-        pq.Insert(new StationDistance(startingStation, 0));
+        pq.Insert(new StationTime(startingStation, 0));
 
         while (!pq.IsEmpty())
         {
-            StationDistance *current = pq.Remove();
+            StationTime *current = pq.Remove();
             if (current->station == endStation)
             {
-                break; // Ends once end station has been reached
+                totalTravelTime = current->time; // Sets total travel time once end station has been reached
+                break;                           // Ends once end station has been reached
             }
 
             for (const auto &connection : graph.adjacencyList.at(current->station))
             {
-                int newDistance = current->distance + connection.travelTime;
-                if (newDistance < distancesToStart[connection.station])
+                int newTime = current->time + connection.travelTime;
+                if (newTime < timesToStart[connection.station])
                 {
-                    distancesToStart[connection.station] = newDistance;
+                    timesToStart[connection.station] = newTime;
                     previousStation[connection.station] = current->station;
-                    pq.Insert(new StationDistance(connection.station, newDistance));
+                    pq.Insert(new StationTime(connection.station, newTime));
                 }
             }
 

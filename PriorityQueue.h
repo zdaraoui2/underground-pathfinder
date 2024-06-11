@@ -1,40 +1,40 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
-struct StationDistance
+struct StationTime
 {
     std::string station;
-    int distance;
+    int time;
 
-    StationDistance(const std::string &station, int distance)
-        : station(station), distance(distance) {}
+    StationTime(const std::string &station, int time)
+        : station(station), time(time) {}
 
-    bool operator>(const StationDistance &other) const
+    bool operator>(const StationTime &other) const
     {
-        return distance > other.distance;
+        return time > other.time;
     }
 
-    bool operator<(const StationDistance &other) const
+    bool operator<(const StationTime &other) const
     {
-        return distance < other.distance;
+        return time < other.time;
     }
 
-    bool operator==(const StationDistance &other) const
+    bool operator==(const StationTime &other) const
     {
-        return distance == other.distance;
+        return time == other.time;
     }
 };
 
 class PriorityQueue
 {
     int size;
-    StationDistance **data;
+    StationTime **data;
     int count;
 
 public:
     PriorityQueue(int size)
     {
-        data = new StationDistance *[size];
+        data = new StationTime *[size];
         this->size = size;
         count = 0;
     }
@@ -42,7 +42,7 @@ public:
     {
         delete[] data;
     }
-    void Insert(StationDistance *item)
+    void Insert(StationTime *item)
     {
         if (count == 0)
         {
@@ -66,11 +66,11 @@ public:
             count++;
         }
     }
-    StationDistance *Remove()
+    StationTime *Remove()
     {
         return data[--count];
     }
-    StationDistance *PeakMin()
+    StationTime *PeakMin()
     {
         return data[count - 1];
     }
