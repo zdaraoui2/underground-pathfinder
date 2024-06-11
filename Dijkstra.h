@@ -4,15 +4,24 @@
 #include "Graph.h"
 #include "PriorityQueue.h"
 
+struct PathStep
+{
+    std::string station;
+    std::string line;
+
+    PathStep(const std::string &station, const std::string &line)
+        : station(station), line(line) {}
+};
+
 class Dijkstra
 {
 public:
-    static std::vector<std::string> findShortestPath(const Graph &graph, const std::string &startingStation, const std::string &endStation, int &totalTravelTime)
+    static std::vector<PathStep> findShortestPath(const Graph &graph, const std::string &startingStation, const std::string &endStation, int &totalTravelTime)
     {
         // Store shortest distance from start to each node
         std::unordered_map<std::string, int> timesToStart;
-        // Store previous node in shortest path
-        std::unordered_map<std::string, std::string> previousStation;
+        // Store previous node and line in shortest path
+        std::unordered_map<std::string, std::pair<std::string, std::string>> previousStation;
         // Priority Queue
         PriorityQueue pq(100);
 
@@ -41,7 +50,7 @@ public:
                 if (newTime < timesToStart[connection.station])
                 {
                     timesToStart[connection.station] = newTime;
-                    previousStation[connection.station] = current->station;
+                    previousStation[connection.station] = {current->station, connection.line};
                     pq.Insert(new StationTime(connection.station, newTime));
                 }
             }
@@ -50,10 +59,11 @@ public:
         }
 
         // Construct path
-        std::vector<std::string> path;
-        for (std::string at = endStation; at != ""; at = previousStation[at])
+        std::vector<PathStep> path;
+        for (std::string at = endStation; at != ""; at = previousStation[at].first)
         {
-            path.push_back(at);
+            std::string line = previousStation[at].second;
+            path.emplace_back(at, line);
             if (at == startingStation)
             {
                 break;
