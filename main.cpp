@@ -14,9 +14,9 @@ void initialiseGraph(Graph &graph)
     graph.addStation("Bond Street");
 
     // Initialise Edges
-    graph.addConnection("Oxford Circus", "Green Park", 1);
-    graph.addConnection("Oxford Circus", "Bond Street", 1);
-    graph.addConnection("Victoria", "Green Park", 1);
+    graph.addConnection("Oxford Circus", "Green Park", 1, "Victoria");
+    graph.addConnection("Oxford Circus", "Bond Street", 3, "Central");
+    graph.addConnection("Victoria", "Green Park", 2, "Victoria");
 }
 
 std::string getValidStation(const std::vector<std::string> stations, const std::string &type)
@@ -39,17 +39,47 @@ std::string getValidStation(const std::vector<std::string> stations, const std::
 
 void findShortestPath(Graph graph, std::string startStation, std::string endStation)
 {
-
-    std::vector<std::string> path = Dijkstra::findShortestPath(graph, startStation, endStation);
+    int totalTravelTime = 0;
+    std::vector<PathStep> path = Dijkstra::findShortestPath(graph, startStation, endStation, totalTravelTime);
 
     if (!path.empty())
     {
-        std::cout << "Shortest path from " << startStation << " to " << endStation << " is: ";
-        for (const auto &station : path)
+        std::cout << "To get to " << endStation << " from " << startStation << ":" << std::endl;
+
+        std::string currentLine = path[1].line;
+        std::vector<std::string> stops;
+        int numberOfStops = 0;
+
+        for (size_t i = 1; i < path.size(); ++i)
         {
-            std::cout << station << " ";
+            if (path[i].line != currentLine)
+            {
+                std::cout << "Catch the " << currentLine << " line for " << numberOfStops << " stops." << std::endl;
+                std::cout << "Stops: ";
+                for (const auto &stop : stops)
+                {
+                    std::cout << stop << " ";
+                }
+                std::cout << std::endl;
+                std::cout << "Then..." << std::endl;
+
+                currentLine = path[i].line;
+                stops.clear();
+                numberOfStops = 0;
+            }
+
+            stops.push_back(path[i].station);
+            numberOfStops++;
+        }
+
+        std::cout << "Catch the " << currentLine << " for " << numberOfStops << " stops." << std::endl;
+        std::cout << "Stops: ";
+        for (const auto &stop : stops)
+        {
+            std::cout << stop << " ";
         }
         std::cout << std::endl;
+        std::cout << "The total journey time is " << totalTravelTime << " minutes." << std::endl;
     }
     else
     {
