@@ -19,6 +19,24 @@ void initialiseGraph(Graph &graph)
     graph.addConnection("Victoria", "Green Park", 1);
 }
 
+std::string getValidStation(const std::vector<std::string> stations, const std::string &type)
+{
+    std::string station;
+    while (true)
+    {
+        std::cout << "Enter the " << type << " station: ";
+        std::getline(std::cin, station);
+        if (std::binary_search(stations.begin(), stations.end(), station))
+        {
+            return station;
+        }
+        else
+        {
+            std::cout << "The station " << station << " is not present in the graph. Please try again." << std::endl;
+        }
+    }
+}
+
 void findShortestPath(Graph graph, std::string startStation, std::string endStation)
 {
 
@@ -51,6 +69,10 @@ int main()
     // BubbleSort(stations);
     // londonUnderground.printSortedStations(stations);
 
+    // Get all stations and sort them
+    std::vector<std::string> stations = londonUnderground.getAllStations();
+    BubbleSort(stations);
+
     // // User input for station search
     // std::string targetStation;
     // std::cout << "Enter the station name to search: ";
@@ -66,13 +88,10 @@ int main()
     // testGetConnections(londonUnderground, "Oxford Circus");
 
     // User input for finding path
-    std::string startStation, endStation;
-    std::cout << "Enter the station you are starting at: ";
-    std::getline(std::cin, startStation);
-    std::cout << "Enter the station you are going to: ";
-    std::getline(std::cin, endStation);
+    std::string startStation = getValidStation(stations, "start");
+    std::string endStation = getValidStation(stations, "end");
 
-    // Use Dijsktra's algorithm
+    // Use Dijkstra's algorithm
     findShortestPath(londonUnderground, startStation, endStation);
 
     // C++ convention to return zero from main
