@@ -3,20 +3,25 @@
 #include "PriorityQueue.h"
 #include "Dijkstra.h"
 #include "Test.h"
+#include "Lines.h"
 #include <iostream>
 
 void initialiseGraph(Graph &graph)
 {
     // Initialise Vertices
-    graph.addStation("Oxford Circus");
-    graph.addStation("Green Park");
-    graph.addStation("Victoria");
-    graph.addStation("Bond Street");
+    initialiseStations(graph);
 
     // Initialise Edges
-    graph.addConnection("Oxford Circus", "Green Park", 1, "Victoria");
-    graph.addConnection("Oxford Circus", "Bond Street", 3, "Central");
-    graph.addConnection("Victoria", "Green Park", 2, "Victoria");
+    initialiseCentralLine(graph);
+    initialiseVictoriaLine(graph);
+    initialiseBakerlooLine(graph);
+    initialisePiccadillyLine(graph);
+    initialiseJubileeLine(graph);
+    initialiseCircleLine(graph);
+    initialiseDistrictLine(graph);
+    initialiseNorthernLine(graph);
+    initialiseMetropolitanLine(graph);
+    initialiseElizabethLine(graph);
 }
 
 std::string getValidStation(const std::vector<std::string> stations, const std::string &type)
