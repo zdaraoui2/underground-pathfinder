@@ -23,7 +23,7 @@ void testPriorityQueue()
     while (!pq.IsEmpty())
     {
         Connection *conn = pq.Remove();
-        std::cout << "Station: " << conn->startStation << ", Time: " << conn->travelTime << std::endl;
+        std::cout << "Station: " << conn->getStartStation() << ", Time: " << conn->getTravelTime() << std::endl;
         delete conn;
     }
 }
@@ -34,7 +34,7 @@ void testGetConnections(const Graph &graph, const std::string &station)
     std::cout << "Connections for station " << station << ":" << std::endl;
     for (const auto &connection : connections)
     {
-        std::cout << "  - To: " << connection.endStation << ", Travel Time: " << connection.travelTime << ", Line: " << connection.line << std::endl;
+        std::cout << "  - To: " << connection.getEndStation() << ", Travel Time: " << connection.getTravelTime() << ", Line: " << connection.getLine() << std::endl;
     }
 }
 

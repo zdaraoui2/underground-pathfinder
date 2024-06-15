@@ -4,19 +4,10 @@
 #include "Graph.h"
 #include "PriorityQueue.h"
 
-struct PathStep
-{
-    std::string station;
-    std::string line;
-
-    PathStep(const std::string &station, const std::string &line)
-        : station(station), line(line) {}
-};
-
 class Dijkstra
 {
 public:
-    static std::vector<PathStep> findShortestPath(const Graph &graph, const std::string &startingStation, const std::string &endStation, int &totalTravelTime)
+    static std::vector<Connection> findShortestPath(const Graph &graph, const std::string &startingStation, const std::string &endStation, int &totalTravelTime)
     {
         // Store shortest distance from start to each node
         std::unordered_map<std::string, int> timesToStart;
@@ -38,20 +29,20 @@ public:
         while (!pq.IsEmpty())
         {
             Connection *current = pq.Remove();
-            if (current->startStation == endStation)
+            if (current->getStartStation() == endStation)
             {
-                totalTravelTime = current->travelTime; // Sets total travel time once end station has been reached
-                break;                                 // Ends once end station has been reached
+                totalTravelTime = current->getTravelTime(); // Sets total travel time once end station has been reached
+                break;                                      // Ends once end station has been reached
             }
 
-            for (const auto &connection : graph.adjacencyList.at(current->startStation))
+            for (const auto &connection : graph.adjacencyList.at(current->getStartStation()))
             {
-                int newTime = current->travelTime + connection.travelTime;
-                if (newTime < timesToStart[connection.endStation])
+                int newTime = current->getTravelTime() + connection.getTravelTime();
+                if (newTime < timesToStart[connection.getEndStation()])
                 {
-                    timesToStart[connection.endStation] = newTime;
-                    previousStation[connection.endStation] = {current->startStation, connection.line};
-                    pq.Insert(new Connection(connection.endStation, newTime));
+                    timesToStart[connection.getEndStation()] = newTime;
+                    previousStation[connection.getEndStation()] = {current->getStartStation(), connection.getLine()};
+                    pq.Insert(new Connection(connection.getEndStation(), newTime));
                 }
             }
 
@@ -59,7 +50,7 @@ public:
         }
 
         // Construct path
-        std::vector<PathStep> path;
+        std::vector<Connection> path;
         for (std::string at = endStation; at != ""; at = previousStation[at].first)
         {
             std::string line = previousStation[at].second;

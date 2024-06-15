@@ -21,8 +21,8 @@ public:
     // Method to add an edge to the graph
     void addConnection(const std::string &from, const std::string &to, int travelTime, const std::string &line)
     {
-        adjacencyList[from].push_back(Connection(from, to, travelTime, line));
-        adjacencyList[to].push_back(Connection(to, from, travelTime, line));
+        adjacencyList[from].emplace_back(from, to, travelTime, line);
+        adjacencyList[to].emplace_back(to, from, travelTime, line);
     }
 
     // Method to output the graph as text
@@ -35,7 +35,7 @@ public:
 
             for (const auto &connection : station.second)
             {
-                std::cout << "  - To: " << connection.endStation << ", Travel Time: " << connection.travelTime << ", Line: " << connection.line << std::endl;
+                std::cout << "  - To: " << connection.getEndStation() << ", Travel Time: " << connection.getTravelTime() << ", Line: " << connection.getLine() << std::endl;
             }
 
             std::cout << std::endl;

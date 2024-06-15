@@ -24,7 +24,7 @@ void initialiseGraph(Graph &graph)
     initialiseElizabethLine(graph);
 }
 
-std::string getValidStation(const std::vector<std::string> stations, const std::string &type)
+std::string getValidStation(const std::vector<std::string> &stations, const std::string &type)
 {
     std::string station;
     while (true)
@@ -42,22 +42,22 @@ std::string getValidStation(const std::vector<std::string> stations, const std::
     }
 }
 
-void findShortestPath(Graph graph, std::string startStation, std::string endStation)
+void findShortestPath(Graph graph, const std::string &startStation, const std::string &endStation)
 {
     int totalTravelTime = 0;
-    std::vector<PathStep> path = Dijkstra::findShortestPath(graph, startStation, endStation, totalTravelTime);
+    std::vector<Connection> path = Dijkstra::findShortestPath(graph, startStation, endStation, totalTravelTime);
 
     if (!path.empty())
     {
         std::cout << "To get to " << endStation << " from " << startStation << ":" << std::endl;
 
-        std::string currentLine = path[1].line;
+        std::string currentLine = path[1].getLine();
         std::vector<std::string> stops;
         int numberOfStops = 0;
 
         for (size_t i = 1; i < path.size(); ++i)
         {
-            if (path[i].line != currentLine)
+            if (path[i].getLine() != currentLine)
             {
                 std::cout << "Catch the " << currentLine << " line for " << numberOfStops << " stops." << std::endl;
                 std::cout << "Stops: ";
@@ -68,16 +68,16 @@ void findShortestPath(Graph graph, std::string startStation, std::string endStat
                 std::cout << std::endl;
                 std::cout << "Then..." << std::endl;
 
-                currentLine = path[i].line;
+                currentLine = path[i].getLine();
                 stops.clear();
                 numberOfStops = 0;
             }
 
-            stops.push_back(path[i].station);
+            stops.push_back(path[i].getStartStation());
             numberOfStops++;
         }
 
-        std::cout << "Catch the " << currentLine << " for " << numberOfStops << " stops." << std::endl;
+        std::cout << "Catch the " << currentLine << " line for " << numberOfStops << " stops." << std::endl;
         std::cout << "Stops: ";
         for (const auto &stop : stops)
         {
