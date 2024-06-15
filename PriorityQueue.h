@@ -1,40 +1,18 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
-struct StationTime
-{
-    std::string station;
-    int time;
-
-    StationTime(const std::string &station, int time)
-        : station(station), time(time) {}
-
-    bool operator>(const StationTime &other) const
-    {
-        return time > other.time;
-    }
-
-    bool operator<(const StationTime &other) const
-    {
-        return time < other.time;
-    }
-
-    bool operator==(const StationTime &other) const
-    {
-        return time == other.time;
-    }
-};
+#include "Connection.h"
 
 class PriorityQueue
 {
     int size;
-    StationTime **data;
+    Connection **data;
     int count;
 
 public:
     PriorityQueue(int size)
     {
-        data = new StationTime *[size];
+        data = new Connection *[size];
         this->size = size;
         count = 0;
     }
@@ -42,7 +20,7 @@ public:
     {
         delete[] data;
     }
-    void Insert(StationTime *item)
+    void Insert(Connection *item)
     {
         if (count == 0)
         {
@@ -66,11 +44,11 @@ public:
             count++;
         }
     }
-    StationTime *Remove()
+    Connection *Remove()
     {
         return data[--count];
     }
-    StationTime *PeakMin()
+    Connection *PeakMin()
     {
         return data[count - 1];
     }

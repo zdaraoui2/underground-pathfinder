@@ -33,25 +33,25 @@ public:
         timesToStart[startingStation] = 0;
 
         // Adds starting station to priority queue
-        pq.Insert(new StationTime(startingStation, 0));
+        pq.Insert(new Connection(startingStation, 0));
 
         while (!pq.IsEmpty())
         {
-            StationTime *current = pq.Remove();
-            if (current->station == endStation)
+            Connection *current = pq.Remove();
+            if (current->startStation == endStation)
             {
-                totalTravelTime = current->time; // Sets total travel time once end station has been reached
-                break;                           // Ends once end station has been reached
+                totalTravelTime = current->travelTime; // Sets total travel time once end station has been reached
+                break;                                 // Ends once end station has been reached
             }
 
-            for (const auto &connection : graph.adjacencyList.at(current->station))
+            for (const auto &connection : graph.adjacencyList.at(current->startStation))
             {
-                int newTime = current->time + connection.travelTime;
-                if (newTime < timesToStart[connection.station])
+                int newTime = current->travelTime + connection.travelTime;
+                if (newTime < timesToStart[connection.endStation])
                 {
-                    timesToStart[connection.station] = newTime;
-                    previousStation[connection.station] = {current->station, connection.line};
-                    pq.Insert(new StationTime(connection.station, newTime));
+                    timesToStart[connection.endStation] = newTime;
+                    previousStation[connection.endStation] = {current->startStation, connection.line};
+                    pq.Insert(new Connection(connection.endStation, newTime));
                 }
             }
 

@@ -68,7 +68,7 @@ void initialiseCentralLine(Graph &graph)
 
 void initialiseVictoriaLine(Graph &graph)
 {
-    graph.addConnection("Victoria", "Green Park", 2, "Victoria");
+    graph.addConnection("Victoria", "Green Park", 1, "Victoria");
     graph.addConnection("Green Park", "Oxford Circus", 1, "Victoria");
     graph.addConnection("Oxford Circus", "Warren Street", 1, "Victoria");
     graph.addConnection("Warren Street", "Euston", 1, "Victoria");
@@ -191,7 +191,7 @@ void initialiseMetropolitanLine(Graph &graph)
 void initialiseElizabethLine(Graph &graph)
 {
     graph.addConnection("Paddington", "Bond Street", 1, "Elizabeth");
-    graph.addConnection("Bond Street", "Tottenham Court Road", 1, "Elizabeth");
+    graph.addConnection("Bond Street", "Tottenham Court Road", 2, "Elizabeth");
     graph.addConnection("Tottenham Court Road", "Farringdon", 1, "Elizabeth");
     graph.addConnection("Farringdon", "Liverpool Street", 1, "Elizabeth");
 }
