@@ -99,28 +99,9 @@ int main()
     initialiseGraph(londonUnderground);
     // londonUnderground.printGraph();
 
-    // // Sort and print stations
-    // std::vector<std::string> stations = londonUnderground.getAllStations();
-    // BubbleSort(stations);
-    // londonUnderground.printSortedStations(stations);
-
     // Get all stations and sort them
     std::vector<std::string> stations = londonUnderground.getAllStations();
     BubbleSort(stations);
-
-    // // User input for station search
-    // std::string targetStation;
-    // std::cout << "Enter the station name to search: ";
-    // std::cin >> targetStation;
-
-    // // Perform search for the station
-    // londonUnderground.searchStation(targetStation);
-
-    // // Test PriorityQueue
-    // testPriorityQueue();
-
-    // // Test getConnections method
-    // testGetConnections(londonUnderground, "Oxford Circus");
 
     // User input for finding path
     std::string startStation = getValidStation(stations, "start");
